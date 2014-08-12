@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!-- JTA -->
+	<!-- Construct Atomikos UserTransactionManager, needed to configure Spring -->
+	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
+		init-method="init" destroy-method="close">
+		<!-- when close is called, should we force transactions to terminate or 
+			not? -->
+		<property name="forceShutdown" value="false" />
+	</bean>
+
+	<!-- Also use Atomikos UserTransactionImp, needed to configure Spring -->
+	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+		<property name="transactionTimeout" value="300" />
+	</bean>
+
+
+	<!-- Configure the Spring framework to use JTA transactions from Atomikos -->
+	<bean id="JtaTransactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="transactionManager" ref="AtomikosTransactionManager" />
+		<property name="userTransaction" ref="AtomikosUserTransaction" />
+	</bean>
+
+	<!-- DB 1 설정 -->
+	<bean id="dataSource1" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
+		destroy-method="shutdown">
+		<property name="dataSource">
+			<bean class="org.enhydra.jdbc.standard.StandardXADataSource"
+				destroy-method="shutdown">
+				<property name="transactionManager" ref="atomikosTransactionManager" />
+				<!-- log4sql 에서 정의된 드라이버 명입니다. 쿼리보는거가 편해서요 -->
+				<property name="driverName" value="net.sourceforge.jtds.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:jtds:sqlserver://165.141.245.199:1433/Portal" />
+			</bean>
+		</property>
+		<property name="user" value="sys_eis" />
+		<property name="password" value="idt123!@#" />
+	</bean>
+
+	<!-- SqlSession setup for myBATIS Database Layer -->
+	<bean id="sessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource1" />
+		<property name="configLocation" value="classpath:/mapper/sql-map-config.xml" />
+		<!-- Core File관련 Table SQL MAP 설정 위치 -->
+		<property name="mapperLocations">
+			<list>
+				<!-- mssql용 mapper -->
+				<value>classpath:/sql/db1test.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- DB 2 설정 -->
+	<bean id="dataSource2" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
+		destroy-method="shutdown">
+		<property name="dataSource">
+			<bean class="org.enhydra.jdbc.standard.StandardXADataSource"
+				destroy-method="shutdown">
+				<property name="transactionManager" ref="atomikosTransactionManager" />
+				<!-- log4sql 에서 정의된 드라이버 명입니다. 쿼리보는거가 편해서요 -->
+				<property name="driverName" value="net.sourceforge.jtds.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:jtds:sqlserver://165.141.245.169/Portal;instance=KACOP" />
+			</bean>
+		</property>
+		<property name="user" value="COP_ADMIN" />
+		<property name="password" value="DB@COP@IDT" />
+	</bean>
+
+	<!-- SqlSession setup for myBATIS Database Layer -->
+	<bean id="sessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource2" />
+		<property name="configLocation" value="classpath:/mapper/sql-map-config.xml" />
+		<!-- Core File관련 Table SQL MAP 설정 위치 -->
+		<property name="mapperLocations">
+			<list>
+				<!-- mssql용 mapper -->
+				<value>classpath:/sql/db2test.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionTemplate1" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory1" />
+	</bean>
+
+	<bean id="sqlSessionTemplate2" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory2" />
+	</bean>
+
+
+</beans>
