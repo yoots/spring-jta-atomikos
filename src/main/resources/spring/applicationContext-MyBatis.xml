@@ -9,7 +9,7 @@
 		init-method="init" destroy-method="close">
 		<!-- when close is called, should we force transactions to terminate or 
 			not? -->
-		<property name="forceShutdown" value="false" />
+		<property name="forceShutdown" value="true" />
 	</bean>
 
 	<!-- Also use Atomikos UserTransactionImp, needed to configure Spring -->
@@ -19,10 +19,13 @@
 
 
 	<!-- Configure the Spring framework to use JTA transactions from Atomikos -->
-	<bean id="JtaTransactionManager"
-		class="org.springframework.transaction.jta.JtaTransactionManager">
-		<property name="transactionManager" ref="AtomikosTransactionManager" />
-		<property name="userTransaction" ref="AtomikosUserTransaction" />
+	<bean id="springTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="transactionManager">
+			<ref bean="atomikosTransactionManager" />
+		</property>
+		<property name="userTransaction">
+			<ref bean="atomikosUserTransaction" />
+		</property>
 	</bean>
 
 	<!-- DB 1 설정 -->
