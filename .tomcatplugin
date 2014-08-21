@@ -7,7 +7,7 @@
     <updateXml>true</updateXml>
     <warLocation></warLocation>
     <extraInfo></extraInfo>
-    <webPath>atom</webPath>
+    <webPath>demos</webPath>
     <webClassPathEntries>
         <webClassPathEntry>/spring-jta-atomikos/target/classes</webClassPathEntry>
         <webClassPathEntry>M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar</webClassPathEntry>
