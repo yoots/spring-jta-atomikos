@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<mapper namespace="CommonDao">
+<mapper namespace="TestDao1">
 	
-	<!-- 조직도 트리 -->
-	<select id="common_compnay" resultType="resultMap" >
-			SELECT TOP 10 * FROM dbo.tb_Company
+	<select id="a_test_board" resultType="hashMap" >
+			SELECT TOP 10 * FROM dbo.test_board
     </select>
+    
+    <insert id="a_insert_test_board" parameterType="paramMap">
+    	INSERT INTO dbo.test_board 
+    		( no,title,thread,position )
+		VALUES 
+			(#{no} ,#{title} ,#{thread} ,#{position})
+    </insert>
     
 </mapper>

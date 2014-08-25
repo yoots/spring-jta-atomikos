@@ -26,8 +26,7 @@
 		<property name="transactionTimeout" value="300" />
 	</bean>
 
-	<bean id="springTransactionManager"
-		class="org.springframework.transaction.jta.JtaTransactionManager">
+	<bean id="springTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
 		<property name="transactionManager">
 			<ref bean="atomikosTransactionManager" />
 		</property>
@@ -35,7 +34,6 @@
 			<ref bean="atomikosUserTransaction" />
 		</property>
 		<property name="allowCustomIsolationLevels" value="true" />
-
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="springTransactionManager" />
@@ -43,23 +41,13 @@
 	<aop:aspectj-autoproxy />
 
 	<aop:config proxy-target-class="true">
-		<aop:advisor pointcut="execution(* com.spring.jta.atomikos.service..*.*(..))" advice-ref="txAdvice" />
+		<aop:advisor pointcut="execution(* com.jta.atomikos.service..*.*(..))" advice-ref="txAdvice" />
 	</aop:config>
 
 	<tx:advice id="txAdvice" transaction-manager="springTransactionManager">
 		<tx:attributes>
-			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="save*" propagation="REQUIRED"
-				rollback-for="Exception" />
-			<tx:method name="insert*" propagation="REQUIRED"
-				rollback-for="Exception" />
-			<tx:method name="create*" propagation="REQUIRED"
-				rollback-for="Exception" />
-			<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="update*" propagation="REQUIRED"
-				rollback-for="Exception" />
-			<tx:method name="modify*" propagation="REQUIRED"
-				rollback-for="Exception" />
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
 			<tx:method name="*" read-only="true" />
 		</tx:attributes>
 	</tx:advice>  

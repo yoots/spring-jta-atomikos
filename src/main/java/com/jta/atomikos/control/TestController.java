@@ -21,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jta.atomikos.service.TestService1;
+import com.jta.atomikos.service.TestService2;
 
 
 /**
@@ -36,18 +37,43 @@ public class TestController {
 	@Autowired
 	TestService1 testService1;
 	
+	@Autowired
+	TestService2 testService2;
+	
 	
 	@RequestMapping(value = "/Jta")
 	public String board(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
 		
-		//#{fileId} , #{articleSeq}, #{copSeq}
-		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("fileId", "1312313131");
-		map.put("articleSeq", 9999999);
-		map.put("copSeq", 999);
 		
-		testService1.setInsert(map);
+		
+		System.out.println(testService1.getList(map));
+		
+		System.out.println(testService2.getList(map));
+		
+		map.put("no", "31");
+		map.put("title", "테스트~~~~~!!!");
+		map.put("thread", "31");
+		map.put("position", "AA");
+		
+		try{
+			testService1.insertBoard(map);
+			testService2.insertBoard(map);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		map.put("no", "32");
+		map.put("title", "테스트~~~~~!!!");
+		map.put("thread", "32");
+		map.put("position", "AA");
+		
+		try{
+			testService1.insertAllBoard(map);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		
 		return "test";
 	}

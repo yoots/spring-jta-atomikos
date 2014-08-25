@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<mapper namespace="BoardDao">
+<mapper namespace="TestDao2">
 	
-	<!-- 조직도 트리 -->
-	<select id="common_board" resultType="resultMap" >
-			SELECT TOP 10 * FROM dbo.tb_board
+	<select id="b_test_board" resultType="hashMap" >
+			SELECT TOP 10 * FROM dbo.test_board
     </select>
+    
+    <insert id="b_insert_test_board" parameterType="paramMap">
+    	INSERT INTO dbo.test_board 
+    		( no,title,thread,position )
+		VALUES 
+			(#{no} ,#{title} ,#{thread} ,#{position})
+    </insert>
+    
+    <insert id="b_insert_test_board_2" parameterType="paramMap">
+    	INSERT INTO dbo.test_board 
+    		( no,title,thread,position )
+		VALUES 
+			(#{no} ,#{title} ,#{thread})
+    </insert>
     
 </mapper>

@@ -6,12 +6,8 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Hello world JTA!  
 </h1>
-
-<P>  test=${test} </P>
-
-<P>params=${param.test2}</P>
 
 </body>
 </html>

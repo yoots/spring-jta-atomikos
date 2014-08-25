@@ -28,7 +28,7 @@ public class TestDao1Impl extends SqlSessionTemplate1 implements TestDao1 {
 	 */
 	public List<Map> getList(Map map) {
 		// TODO Auto-generated method stub
-		return selectList("TestDao1.board_list", map);
+		return selectList("TestDao1.a_test_board", map);
 	}
 
 	/* (non-Javadoc)
@@ -36,7 +36,7 @@ public class TestDao1Impl extends SqlSessionTemplate1 implements TestDao1 {
 	 */
 	public void setInsert(Map map) {
 		// TODO Auto-generated method stub
-		insert("TestDao1.insert_test", map);
+		insert("TestDao1.a_insert_test_board", map);
 	}
 	
 }

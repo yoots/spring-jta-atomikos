@@ -23,4 +23,6 @@ public interface TestDao2 {
 	List<Map> getList(Map map);
 	
 	void setInsert(Map map);
+	
+	void setInsert2(Map map);
 }

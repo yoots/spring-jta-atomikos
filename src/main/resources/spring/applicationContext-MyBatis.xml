@@ -4,15 +4,17 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
 
-	<bean id="dataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+	<bean id="dataSource1" class="com.atomikos.jdbc.AtomikosDataSourceBean"
 		init-method="init" destroy-method="close">
 		<property name="uniqueResourceName" value="${jdbc_aa.uniqueResourceName}" />
 		<property name="xaDataSourceClassName" value="${jdbc.xaDataSourceClassName}" />
 		<property name="xaProperties">
 			<props>
+				<prop key="databaseName">${jdbc_aa.databaseName}</prop>
+				<prop key="instance">${jdbc_aa.instance}</prop>
+				<prop key="serverName">${jdbc_aa.serverName}</prop>
 				<prop key="user">${jdbc_aa.username}</prop>
 				<prop key="password">${jdbc_aa.password}</prop>
-				<prop key="url">${jdbc_aa.url}</prop>
 			</props>
 		</property>
 		<property name="minPoolSize" value="${atomikos.minPoolSize}" />
@@ -20,16 +22,16 @@
 		<property name="maxIdleTime" value="${atomikos.maxIdleTime}" />
 	</bean>
 
-	<bean id="dataSourceB" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+	<bean id="dataSource2" class="com.atomikos.jdbc.AtomikosDataSourceBean"
 		init-method="init" destroy-method="close">
 		<property name="uniqueResourceName" value="${jdbc_bb.uniqueResourceName}" />
 		<property name="xaDataSourceClassName" value="${jdbc.xaDataSourceClassName}" />
 		<property name="xaProperties">
 			<props>
+				<prop key="databaseName">${jdbc_bb.databaseName}</prop>
+				<prop key="serverName">${jdbc_bb.serverName}</prop>
 				<prop key="user">${jdbc_bb.username}</prop>
 				<prop key="password">${jdbc_bb.password}</prop>
-				<prop key="url">${jdbc_bb.url}</prop>
-
 			</props>
 		</property>
 		<property name="minPoolSize" value="${atomikos.minPoolSize}" />
@@ -39,27 +41,27 @@
 
 
 	<!-- mybitasSqlSessionFactoryBean -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:/spring/mybatis-config.xml"/>
-		<property name="mapperLocations" value="classpath*:/spring/A_Mapper.xml"/>
-	</bean>
-	
-	<!-- SqlSessionTemplate -->
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-	    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
-	
-	<!-- mybitasSqlSessionFactoryBean -->
-	<bean id="sqlSessionFactoryB" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSourceB" />
-		<property name="configLocation" value="classpath:/spring/mybatis-config.xml"/>
-		<property name="mapperLocations" value="classpath*:/spring/B_Mapper.xml"/>
+	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource1" />
+		<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:/mapper/A_Mapper.xml" />
 	</bean>
 
 	<!-- SqlSessionTemplate -->
-	<bean id="sqlSessionTemplateB" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryB" />
+	<bean id="sqlSessionTemplate1" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory1" />
+	</bean>
+
+	<!-- mybitasSqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource2" />
+		<property name="configLocation" value="classpath:/mapper/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:/mapper/B_Mapper.xml" />
+	</bean>
+
+	<!-- SqlSessionTemplate -->
+	<bean id="sqlSessionTemplate2" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory2" />
 	</bean>
 
 

@@ -28,7 +28,7 @@ public class TestDao2Impl extends SqlSessionTemplate2 implements TestDao2 {
 	 */
 	public List<Map> getList(Map map) {
 		// TODO Auto-generated method stub
-		return selectList("TestDao2.board_list", map);
+		return selectList("TestDao2.b_test_board", map);
 	}
 
 	/* (non-Javadoc)
@@ -36,7 +36,12 @@ public class TestDao2Impl extends SqlSessionTemplate2 implements TestDao2 {
 	 */
 	public void setInsert(Map map) {
 		// TODO Auto-generated method stub
-		insert("TestDao2.insert_test", map);
+		insert("TestDao2.b_insert_test_board", map);
 	}
 
+	public void setInsert2(Map map) {
+		// TODO Auto-generated method stub
+		insert("TestDao2.b_insert_test_board_2", map);
+	}
+	
 }

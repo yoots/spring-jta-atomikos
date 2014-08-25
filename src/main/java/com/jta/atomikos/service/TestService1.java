@@ -22,5 +22,7 @@ public interface TestService1 {
 
 	List<Map> getList(Map map);
 	
-	void setInsert(Map map);
+	void insertBoard(Map map);
+	
+	void insertAllBoard(Map map);
 }

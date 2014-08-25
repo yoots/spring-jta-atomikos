@@ -44,12 +44,21 @@ public class TestService1Impl implements TestService1 {
 	/* (non-Javadoc)
 	 * @see com.jta.jboss.service.TestService1#setInsert(java.util.Map)
 	 */
-	public void setInsert(Map map) {
+	public void insertBoard(Map map) {
 		
 		// TODO Auto-generated method stub
 		testDao1.setInsert(map);
 		
-		testDao2.setInsert(map);
-		
 	}
+
+	/* (non-Javadoc)
+	 * @see com.jta.atomikos.service.TestService1#insertAllBoard(java.util.Map)
+	 */
+	public void insertAllBoard(Map map) {
+		// TODO Auto-generated method stub
+		
+		testDao1.setInsert(map);
+		testDao2.setInsert2(map);
+	}
+	
 }

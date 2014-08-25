@@ -40,7 +40,7 @@ public class TestService2Impl implements TestService2 {
 	/* (non-Javadoc)
 	 * @see com.jta.jboss.service.TestService2#setInsert(java.util.Map)
 	 */
-	public void setInsert(Map map) {
+	public void insertBoard(Map map) {
 		// TODO Auto-generated method stub
 		testDao2.setInsert(map);
 	}
